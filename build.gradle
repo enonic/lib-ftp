@@ -77,6 +77,8 @@ repositories {
 //──────────────────────────────────────────────────────────────────────────────
 // Gulp
 //──────────────────────────────────────────────────────────────────────────────
+task installGulp(overwrite: true) {} // Skip gulp install...
+
 
 task gulp_build(type: GulpTask, dependsOn: 'installGulp') {
     description = 'Build for production using gulp'
