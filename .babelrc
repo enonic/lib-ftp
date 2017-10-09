@@ -1,5 +1,14 @@
+// This file should only be used to transpile gulpfile.babel.js...
 {
-  "presets": ["es2015", "react"],
+  "presets": [
+    "es2015"
+  ],
   "compact": false,
   "minified": false,
+  "ignore": "node_modules",
+  "only": "gulpfile.babel.js",
+  "plugins": [
+    "array-includes",
+  ],
+  "retainLines": false,
 }
