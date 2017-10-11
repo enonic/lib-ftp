@@ -1,0 +1,7 @@
+<tool>
+  <display-name>Test lib-ftp</display-name>
+  <description>Test lib-ftp</description>
+  <allow>
+    <principal>role:system.admin</principal>
+  </allow>
+</tool>

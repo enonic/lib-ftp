@@ -24,23 +24,25 @@
     "gulp-webpack": "^1.5.0",
     "gulper": "^0.1.3"
   },
-  "homepage": "https://github.com/enonic/lib-ftp",
+  "homepage": "https://github.com/enonic/lib-ftp/app-test-lib-ftp",
   "license": "Apache-2.0",
-  "name": "enonic-lib-ftp",
+  "name": "enonic-app-test-lib-ftp",
   "private": "true",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/enonic/lib-ftp"
   },
   "scripts": {
-    "build": "./gradlew build;",
+    "build": "../gradlew build;",
     "clean": "rm -r build 2>/dev/null; true;",
+    "deploy": "npm run install-app;",
     "gulp": "./node_modules/.bin/gulp",
     "gulp:tasks": "./node_modules/.bin/gulp --tasks-simple;",
     "gulper": "./node_modules/.bin/gulper",
     "gdev": "npm run gulp dev;",
     "gprod": "npm run gulp prod;",
     "gwatch": "npm run gulper watch;",
+    "install-app": "echo build/libs/*.jar|xargs -n1 $XP_INSTALL/toolbox/toolbox.sh install-app -a su:password -f ;",
     "watch": "npm run gulper watch;"
   },
   "version": "1.0.0-SNAPSHOT"

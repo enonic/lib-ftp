@@ -1,0 +1,2 @@
+include ':lib-ftp'
+project(':lib-ftp').projectDir = new File(settingsDir, '../')
