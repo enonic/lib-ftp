@@ -1,0 +1,7 @@
+plugins {
+    id "io.purplejs.boot" version "0.8.0"
+}
+
+dependencies {
+    runtime files('../build/libs/lib-ftp-1.0.0-SNAPSHOT.jar')
+}
