@@ -1,5 +1,8 @@
-import { toStr } from '/lib/enonic/util';
-import { newStream, readText } from '/lib/xp/io';
+//import { toStr } from '/lib/enonic/util';
+import { toStr } from 'ftp/object';
+
+//import { newStream, readText } from '/lib/xp/io';
+import { newStream, readText } from '/lib/core'; // Purplejs core
 
 
 const INFO = true;
