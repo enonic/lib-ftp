@@ -18,14 +18,21 @@
 ``` Javascript
 import { toStr } from '/lib/enonic/util';
 import Ftp from '/lib/enonic/ftp';
+
+const DEBUG = true;
+
 const ftp = new Ftp({
     host: 'speedtest.tele2.net',
     username: 'anonymous',
     password: 'anonymous@example.com'
 }).connect().login();
-const names = ftp.getNames(); DEBUG && log.debug(`names:${toStr(names)}`);
+
+const names = ftp.getNames();
+DEBUG && log.debug(`names:${toStr(names)}`);
+
 const fileContent = ftp.retrieveFile({ remote: '/1KB.zip' });
-log.debug(`fileContent:${toStr(fileContent)}`);
+DEBUG && log.debug(`fileContent:${toStr(fileContent)}`);
+
 ftp.logout().disconnect();
 ```
 
