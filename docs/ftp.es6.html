@@ -1,4 +1,43 @@
-import { toStr } from '/lib/enonic/util';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ftp.es6 - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Ftp.html">Ftp</a><ul class='methods'><li data-type='method'><a href="Ftp.html#connect">connect</a></li><li data-type='method'><a href="Ftp.html#disconnect">disconnect</a></li><li data-type='method'><a href="Ftp.html#getNames">getNames</a></li><li data-type='method'><a href="Ftp.html#login">login</a></li><li data-type='method'><a href="Ftp.html#logout">logout</a></li><li data-type='method'><a href="Ftp.html#retrieveFile">retrieveFile</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">ftp.es6</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { toStr } from '/lib/enonic/util';
 import { newStream, readText } from '/lib/xp/io';
 
 
@@ -64,7 +103,7 @@ export default class Ftp {
         this.binaryTransfer = binaryTransfer;
         this.localActive    = localActive;
         this.useEpsvWithIPv4 = useEpsvWithIPv4;
-        DEBUG && log.debug(`${LOG_PREFIX} constructor() ${toStr({
+        DEBUG &amp;&amp; log.debug(`${LOG_PREFIX} constructor() ${toStr({
             host,
             port,
             username,
@@ -83,7 +122,7 @@ export default class Ftp {
      * @return {Ftp} - Instance of the ftp class
      */
     disconnect() {
-        DEBUG && log.debug(`${LOG_PREFIX} disconnect()`);
+        DEBUG &amp;&amp; log.debug(`${LOG_PREFIX} disconnect()`);
         this.__client.disconnect();
         return this; // Chainable
     } // disconnect
@@ -94,7 +133,7 @@ export default class Ftp {
      * @return {Ftp} - Instance of the ftp class
      */
     logout() {
-        DEBUG && log.debug(`${LOG_PREFIX} logout()`);
+        DEBUG &amp;&amp; log.debug(`${LOG_PREFIX} logout()`);
         this.__client.logout
         return this; // Chainable
     } // logout
@@ -105,7 +144,7 @@ export default class Ftp {
      * @return {Ftp} - Instance of the ftp class
      */
     login() {
-        DEBUG && log.debug(`${LOG_PREFIX} login(${toStr({
+        DEBUG &amp;&amp; log.debug(`${LOG_PREFIX} login(${toStr({
             username: this.username,
             password: this.password
         })})`);
@@ -113,7 +152,7 @@ export default class Ftp {
             this.logout();
             throw new Error(ERROR_LOGIN);
         }
-        DEBUG && log.debug(`${LOG_PREFIX} login() systemType:${toStr(this.__client.getSystemType())}`);
+        DEBUG &amp;&amp; log.debug(`${LOG_PREFIX} login() systemType:${toStr(this.__client.getSystemType())}`);
         if (this.binaryTransfer) {
             this.__client.setFileType(FTP.BINARY_FILE_TYPE);
         } else {
@@ -135,13 +174,13 @@ export default class Ftp {
      * @return {Ftp} - Instance of the ftp class
      */
     connect() {
-        DEBUG && log.debug(`${LOG_PREFIX} connect() ${toStr({
+        DEBUG &amp;&amp; log.debug(`${LOG_PREFIX} connect() ${toStr({
             host: this.host,
             port: this.port
         })}`);
         try {
             this.__client.connect(this.host, this.port);
-            INFO && log.info(`Connected to ${this.host} on ${this.port}`);
+            INFO &amp;&amp; log.info(`Connected to ${this.host} on ${this.port}`);
             if (!FTPReply.isPositiveCompletion(this.__client.getReplyCode())) {
                 this.disconnect();
                 throw new Error(ERROR_REFUSED);
@@ -165,14 +204,14 @@ export default class Ftp {
     retrieveFile({
         remote
     }) {
-        TRACE && log.debug(`${LOG_PREFIX} retrieveFile({ remote: ${toStr(remote)} })`);
+        TRACE &amp;&amp; log.debug(`${LOG_PREFIX} retrieveFile({ remote: ${toStr(remote)} })`);
         let stream = new ByteArrayOutputStream(); // The buffer capacity is initially 32 bytes, though its size increases if necessary.
         this.__client.retrieveFile(remote, stream); // Cannot cast com.google.common.io.ByteSource$ByteArrayByteSource to java.io.OutputStream (java.lang.RuntimeException)
         stream.close();
-        DEBUG && log.info(`${LOG_PREFIX} retrieveFile({ remote: ${toStr(remote)} }) size:${toStr(stream.size())}`);
+        DEBUG &amp;&amp; log.info(`${LOG_PREFIX} retrieveFile({ remote: ${toStr(remote)} }) size:${toStr(stream.size())}`);
         const text = stream.toString(); // ISO-8859-1
         //const text = stream.toString(new Charset('UTF-8', [])); // ISO-8859-1
-        TRACE && log.info(`${LOG_PREFIX} retrieveFile text:${toStr(text)}`);
+        TRACE &amp;&amp; log.info(`${LOG_PREFIX} retrieveFile text:${toStr(text)}`);
         //const text = readText(stream);
         //log.info(`${LOG_PREFIX} retrieveFile() text:${toStr(text)}`);
         return text;
@@ -192,9 +231,9 @@ export default class Ftp {
         remote = '/',
         displayTimeZoneId
     } = {}) {
-        TRACE && log.info(`${LOG_PREFIX} mlistDir({ remote: ${toStr(remote)}, displayTimeZoneId: ${toStr(displayTimeZoneId)} })`);
+        TRACE &amp;&amp; log.info(`${LOG_PREFIX} mlistDir({ remote: ${toStr(remote)}, displayTimeZoneId: ${toStr(displayTimeZoneId)} })`);
         let dirList = __.toNativeObject(new HashSet(this.__client.mlistDir(remote)));
-        DEBUG && log.info(`${LOG_PREFIX} mlistDir() dirList:${toStr(dirList)}`);
+        DEBUG &amp;&amp; log.info(`${LOG_PREFIX} mlistDir() dirList:${toStr(dirList)}`);
         /*while (true) {
             const f = this.__client.mlistDir(remote);
             if(!f) { break };
@@ -215,14 +254,14 @@ export default class Ftp {
      * @method Ftp#getNames
      * @param {Object} params
      * @param {string} params.remote - Path on the ftp server.
-     * @return {Array<string>} -
+     * @return {Array&lt;string>} -
      */
     getNames({
         remote = '/'
     } = {}) {
-        TRACE && log.info(`${LOG_PREFIX} getNames({ remote: ${toStr(remote)} })`);
+        TRACE &amp;&amp; log.info(`${LOG_PREFIX} getNames({ remote: ${toStr(remote)} })`);
         const names = __.toNativeObject(Arrays.asList(this.__client.listNames(remote)));
-        DEBUG && log.info(`${LOG_PREFIX} getNames({ remote: ${toStr(remote)} }) names:${toStr(names)}`);
+        DEBUG &amp;&amp; log.info(`${LOG_PREFIX} getNames({ remote: ${toStr(remote)} }) names:${toStr(names)}`);
         return names;
     } // getNames
 
@@ -233,3 +272,22 @@ export default class Ftp {
 
 
 } // export default class Ftp
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Oct 12 2017 12:53:42 GMT+0200 (CEST) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
