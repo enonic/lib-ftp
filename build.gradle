@@ -1,69 +1,22 @@
-buildscript {
-    repositories {
-        mavenLocal()
-        jcenter()
-        maven {
-            url 'http://repo.enonic.com/public'
-        }
-        maven {
-            url 'https://plugins.gradle.org/m2/'
-        }
-    }
-
-    dependencies {
-        classpath "com.enonic.xp:gradle-plugin:${xpVersion}"
-        classpath 'com.moowork.gradle:gradle-node-plugin:1.2.0'
-    }
+plugins {
+	id 'java' // Needed for libs building without xp.apps plugin
+	id 'maven' // Needed for uploadArchives to work locally
+	id 'com.enonic.defaults' version '1.0.3'
+	id "com.moowork.node" version "1.2.0"
+	id "com.moowork.gulp" version "1.2.0"
 }
-
-/*plugins {
-  //id "com.moowork.node" version "1.2.0"
-  id "com.moowork.gulp" version "1.2.0"
-  //id "me.taku_k.yarn" version "0.1.3"
-}*/
-
-apply plugin: 'com.moowork.gulp'
-
-//──────────────────────────────────────────────────────────────────────────────
-// Yarn
-//──────────────────────────────────────────────────────────────────────────────
-/*yarn {
-    version = '1.1.0'
-}*/
-
-//yarnInstall.dependsOn += yarnSetup
-
-//──────────────────────────────────────────────────────────────────────────────
-// classname: AppPlugin
-// defines: app, include, compile, runtime, build, jar, sourceSets
-//──────────────────────────────────────────────────────────────────────────────
-apply plugin: 'com.enonic.xp.app'
-
-app {
-    name = project.appName
-    displayName = project.displayName
-    vendorName = 'Enonic AS'
-    vendorUrl = 'http://enonic.com'
-}
-
-/*node {
-    version = '8.6.0'
-    // If true, it will download node using above parameters.
-    // If false, it will try to use globally installed node.
-    download = false
-}*/
 
 
 dependencies {
 
     // Enonic core libs
-    include "com.enonic.xp:lib-io:${xpVersion}"
+    compile "com.enonic.xp:lib-io:${xpVersion}"
 
     // Enonic libs
-    include "com.enonic.lib:util:1.1.3"
+    compile "com.enonic.lib:util:1.1.3"
 
     // Other libs
-    include 'commons-net:commons-net:3.3'
+    compile 'commons-net:commons-net:3.3'
 
 } // dependencies
 
