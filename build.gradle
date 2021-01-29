@@ -50,8 +50,8 @@ gulp {
 }
 
 // processes your package.json before running gulp build
-//gulp_build.dependsOn 'npmInstall'
-gulp_build.dependsOn yarnInstall
+gulp_build.dependsOn 'npmInstall'
+//gulp_build.dependsOn yarnInstall
 
 // runs "gulp build" as part of your gradle build
 build.dependsOn 'gulp_build'
