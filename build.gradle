@@ -2,7 +2,7 @@ plugins {
 	id 'java'
 	id 'maven-publish'
     id 'com.enonic.xp.base' version '2.0.0'
-	id "com.moowork.node" version "1.3.1"
+	id "com.github.node-gradle.node" version '2.2.4'
 }
 
 
@@ -31,13 +31,6 @@ dependencies {
 
 tasks.withType(Copy) {
   includeEmptyDirs = false
-}
-
-//──────────────────────────────────────────────────────────────────────────────
-// Gradle wrapper
-//──────────────────────────────────────────────────────────────────────────────
-wrapper {
-	distributionUrl = "${gradleDistributionUrl}"
 }
 
 //──────────────────────────────────────────────────────────────────────────────
