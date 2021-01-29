@@ -11,7 +11,7 @@
     "babel-plugin-array-includes": "^2.0.3",
     "babel-preset-es2015": "^6.24.1",
     "babel-register": "^6.24.1",
-    "docdash": "^0.4.0",
+    "docdash": "^1.2.0",
     "doctoc": "^1.3.0",
     "glob": "^7.1.2",
     "gulp": "4.0.2",
