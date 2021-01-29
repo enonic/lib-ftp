@@ -1,14 +1,22 @@
-// This file should only be used to transpile gulpfile.babel.js...
 {
-  "presets": [
-    "es2015"
-  ],
-  "compact": false,
-  "minified": false,
-  "ignore": "node_modules",
-  "only": "gulpfile.babel.js",
-  "plugins": [
-    "array-includes",
-  ],
-  "retainLines": false,
+	"plugins": [
+		"array-includes",
+		"@babel/plugin-proposal-class-properties",
+		"@babel/plugin-proposal-object-rest-spread",
+		"@babel/plugin-transform-modules-commonjs",
+		"@babel/plugin-transform-object-assign"
+	],
+	"presets": [
+		[
+			"@babel/preset-env",
+			{
+				"forceAllTransforms": false,
+				"corejs": 3,
+				"targets": {
+					"esmodules": true
+				},
+				"useBuiltIns": "usage"
+			}
+		]
+	]
 }

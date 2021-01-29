@@ -1,9 +1,19 @@
 plugins {
 	id 'java' // Needed for libs building without xp.apps plugin
 	id 'maven' // Needed for uploadArchives to work locally
-	id 'com.enonic.defaults' version '2.0.1'
+	//id 'com.enonic.defaults' version '2.0.1'
+    id 'com.enonic.xp.base' version '2.0.0'
 	id "com.moowork.node" version "1.3.1"
-	id "com.moowork.gulp" version "1.3.0"
+}
+
+
+repositories {
+    xp.enonicRepo()
+    //mavenLocal()
+    jcenter()
+    /*maven {
+        url 'http://repo.enonic.com/public'
+    }*/
 }
 
 
@@ -13,49 +23,13 @@ dependencies {
     compile "com.enonic.xp:lib-io:${xpVersion}"
 
     // Enonic libs
-    compile "com.enonic.lib:util:1.3.1"
+    compile "com.enonic.lib:util:2.2.1"
 
     // Other libs
     compile 'commons-net:commons-net:3.7.2'
 
 } // dependencies
 
-
-repositories {
-    mavenLocal()
-    jcenter()
-    maven {
-        url 'http://repo.enonic.com/public'
-    }
-}
-
-
-task gulp_build(type: GulpTask, dependsOn: 'installGulp') {
-    description = 'Build for production using gulp'
-    args = ["--color", "--gulpfile", "gulpfile.babel.js", "prod"]
-}
-
-
-// TODO: Does gulp watch block for gradle continous?
-task gulp_watch(type: GulpTask, dependsOn: 'installGulp') {
-    description = 'Build for development and watch using gulp'
-    args = ["--color", "--gulpfile", "gulpfile.babel.js", "watch"]
-}
-
-gulp {
-    // Set the directory where gulpfile.js should be found
-    workDir = file("${project.projectDir}")
-    // Whether colors should output on the terminal
-    colors = true
-}
-
-// processes your package.json before running gulp build
-gulp_build.dependsOn 'npmInstall'
-//gulp_build.dependsOn yarnInstall
-
-// runs "gulp build" as part of your gradle build
-build.dependsOn 'gulp_build'
-build.mustRunAfter 'gulp_build'
 
 //──────────────────────────────────────────────────────────────────────────────
 // Let gulp handle everything except compiling java
@@ -65,6 +39,24 @@ tasks.withType(Copy) {
   includeEmptyDirs = false
 }
 
+//──────────────────────────────────────────────────────────────────────────────
+// Gradle wrapper
+//──────────────────────────────────────────────────────────────────────────────
+wrapper {
+	distributionUrl = "${gradleDistributionUrl}"
+}
+
+//──────────────────────────────────────────────────────────────────────────────
+// Gradle node plugin
+//──────────────────────────────────────────────────────────────────────────────
+node {
+	version "${nodeVersion}"
+	download true
+}
+
+//──────────────────────────────────────────────────────────────────────────────
+// Webpack
+//──────────────────────────────────────────────────────────────────────────────
 sourceSets {
     main {
         java {
@@ -75,4 +67,41 @@ sourceSets {
             exclude '*'
         }
     }
+}
+
+task webpack(type:NodeTask) {
+	dependsOn yarn_install
+	mustRunAfter yarn_install
+	script = file('node_modules/webpack-cli/bin/cli.js')
+	args = [
+		'--color'
+	]
+	outputs.dir './build/resources/main' // processResources will delete the directory if this is not present
+}
+
+
+task watch(type:NodeTask) {
+	script = file('node_modules/webpack-cli/bin/cli.js')
+	args = [
+		'--color',
+		'--watch'
+	]
+}
+
+
+processResources {
+	dependsOn webpack
+	mustRunAfter webpack
+
+	exclude '**/.gitkeep'
+
+	// Let webpack handle these (rather than gradle)
+	exclude '**/*.css'
+	exclude '**/*.es'
+	exclude '**/*.js'
+	exclude '**/*.jsx'
+	exclude '**/*.less'
+	exclude '**/*.sass'
+	exclude '**/*.scss'
+	exclude '**/*.styl'
 }
