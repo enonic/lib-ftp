@@ -9,7 +9,6 @@ plugins {
 repositories {
     xp.enonicRepo()
     jcenter()
-    //mavenLocal()
 }
 
 
@@ -38,7 +37,7 @@ tasks.withType(Copy) {
 //──────────────────────────────────────────────────────────────────────────────
 node {
 	version "${nodeVersion}"
-	download true
+	download = true
 }
 
 //──────────────────────────────────────────────────────────────────────────────
@@ -57,8 +56,7 @@ sourceSets {
 }
 
 task webpack(type:NodeTask) {
-	dependsOn yarn_install
-	mustRunAfter yarn_install
+	dependsOn yarn
 	script = file('node_modules/webpack-cli/bin/cli.js')
 	args = [
 		'--color'
@@ -78,7 +76,6 @@ task watch(type:NodeTask) {
 
 processResources {
 	dependsOn webpack
-	mustRunAfter webpack
 
 	exclude '**/.gitkeep'
 
