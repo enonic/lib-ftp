@@ -20,7 +20,7 @@ dependencies {
     compile 'com.enonic.lib:lib-util:2.2.1'
 
     // Other libs
-    compile 'commons-net:commons-net:3.7.2'
+    compile 'commons-net:commons-net:3.8.0'
 } // dependencies
 
 
