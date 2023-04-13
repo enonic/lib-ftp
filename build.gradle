@@ -14,13 +14,13 @@ repositories {
 
 dependencies {
     // Enonic core libs
-    compile "com.enonic.xp:lib-io:${xpVersion}"
+    implementation "com.enonic.xp:lib-io:${xpVersion}"
 
     // Enonic libs
-    compile 'com.enonic.lib:lib-util:2.2.1'
+    implementation 'com.enonic.lib:lib-util:2.2.1'
 
     // Other libs
-    compile 'commons-net:commons-net:3.9.0'
+    implementation 'commons-net:commons-net:3.9.0'
 } // dependencies
 
 
