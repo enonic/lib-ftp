@@ -17,7 +17,7 @@ dependencies {
     implementation "com.enonic.xp:lib-io:${xpVersion}"
 
     // Enonic libs
-    implementation 'com.enonic.lib:lib-util:2.2.1'
+    implementation 'com.enonic.lib:lib-util:3.1.1'
 
     // Other libs
     implementation 'commons-net:commons-net:3.9.0'
