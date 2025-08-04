@@ -20,7 +20,7 @@ dependencies {
     implementation 'com.enonic.lib:lib-util:3.1.1'
 
     // Other libs
-    implementation 'commons-net:commons-net:3.11.1'
+    implementation 'commons-net:commons-net:3.12.0'
 } // dependencies
 
 
