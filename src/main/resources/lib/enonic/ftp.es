@@ -1,4 +1,3 @@
-import { toStr } from '/lib/util';
 import { newStream, readText } from '/lib/xp/io';
 
 
@@ -64,7 +63,7 @@ export default class Ftp {
         this.binaryTransfer = binaryTransfer;
         this.localActive    = localActive;
         this.useEpsvWithIPv4 = useEpsvWithIPv4;
-        DEBUG && log.debug(`${LOG_PREFIX} constructor() ${toStr({
+        DEBUG && log.debug(`${LOG_PREFIX} constructor() ${JSON.stringify({
             host,
             port,
             username,
@@ -105,7 +104,7 @@ export default class Ftp {
      * @return {Ftp} - Instance of the ftp class
      */
     login() {
-        DEBUG && log.debug(`${LOG_PREFIX} login(${toStr({
+        DEBUG && log.debug(`${LOG_PREFIX} login(${JSON.stringify({
             username: this.username,
             password: this.password
         })})`);
@@ -113,7 +112,7 @@ export default class Ftp {
             this.logout();
             throw new Error(ERROR_LOGIN);
         }
-        DEBUG && log.debug(`${LOG_PREFIX} login() systemType:${toStr(this.__client.getSystemType())}`);
+        DEBUG && log.debug(`${LOG_PREFIX} login() systemType:${JSON.stringify(this.__client.getSystemType())}`);
         if (this.binaryTransfer) {
             this.__client.setFileType(FTP.BINARY_FILE_TYPE);
         } else {
@@ -135,7 +134,7 @@ export default class Ftp {
      * @return {Ftp} - Instance of the ftp class
      */
     connect() {
-        DEBUG && log.debug(`${LOG_PREFIX} connect() ${toStr({
+        DEBUG && log.debug(`${LOG_PREFIX} connect() ${JSON.stringify({
             host: this.host,
             port: this.port
         })}`);
@@ -148,7 +147,7 @@ export default class Ftp {
             }
         } catch(e) {
             if(e.message === ERROR_REFUSED) { throw e; }
-            log.error(`${LOG_PREFIX} connect() catch e.message:${toStr(e.message)} e.name:${toStr(e.name)} e:${toStr(e)}`);
+            log.error(`${LOG_PREFIX} connect() catch e.message:${JSON.stringify(e.message)} e.name:${JSON.stringify(e.name)} e:${JSON.stringify(e)}`);
             throw e;
             //isConnected()
         }
@@ -165,16 +164,16 @@ export default class Ftp {
     retrieveFile({
         remote
     }) {
-        TRACE && log.debug(`${LOG_PREFIX} retrieveFile({ remote: ${toStr(remote)} })`);
+        TRACE && log.debug(`${LOG_PREFIX} retrieveFile({ remote: ${JSON.stringify(remote)} })`);
         let stream = new ByteArrayOutputStream(); // The buffer capacity is initially 32 bytes, though its size increases if necessary.
         this.__client.retrieveFile(remote, stream); // Cannot cast com.google.common.io.ByteSource$ByteArrayByteSource to java.io.OutputStream (java.lang.RuntimeException)
         stream.close();
-        DEBUG && log.info(`${LOG_PREFIX} retrieveFile({ remote: ${toStr(remote)} }) size:${toStr(stream.size())}`);
+        DEBUG && log.info(`${LOG_PREFIX} retrieveFile({ remote: ${JSON.stringify(remote)} }) size:${JSON.stringify(stream.size())}`);
         const text = stream.toString(); // ISO-8859-1
         //const text = stream.toString(new Charset('UTF-8', [])); // ISO-8859-1
-        TRACE && log.info(`${LOG_PREFIX} retrieveFile text:${toStr(text)}`);
+        TRACE && log.info(`${LOG_PREFIX} retrieveFile text:${JSON.stringify(text)}`);
         //const text = readText(stream);
-        //log.info(`${LOG_PREFIX} retrieveFile() text:${toStr(text)}`);
+        //log.info(`${LOG_PREFIX} retrieveFile() text:${JSON.stringify(text)}`);
         return text;
         //this.__client.noop(); // check that control connection is working OK
     } // retrieveFile
@@ -192,9 +191,9 @@ export default class Ftp {
         remote = '/',
         displayTimeZoneId
     } = {}) {
-        TRACE && log.info(`${LOG_PREFIX} mlistDir({ remote: ${toStr(remote)}, displayTimeZoneId: ${toStr(displayTimeZoneId)} })`);
+        TRACE && log.info(`${LOG_PREFIX} mlistDir({ remote: ${JSON.stringify(remote)}, displayTimeZoneId: ${JSON.stringify(displayTimeZoneId)} })`);
         let dirList = __.toNativeObject(new HashSet(this.__client.mlistDir(remote)));
-        DEBUG && log.info(`${LOG_PREFIX} mlistDir() dirList:${toStr(dirList)}`);
+        DEBUG && log.info(`${LOG_PREFIX} mlistDir() dirList:${JSON.stringify(dirList)}`);
         /*while (true) {
             const f = this.__client.mlistDir(remote);
             if(!f) { break };
@@ -202,7 +201,7 @@ export default class Ftp {
                 rawListing: f.getRawListing(),
                 formattedString: f.toFormattedString(displayTimeZoneId)
             };
-            log.info(`${LOG_PREFIX} mlistDir({ remote: ${toStr(remote)} }) file: ${file}`);
+            log.info(`${LOG_PREFIX} mlistDir({ remote: ${JSON.stringify(remote)} }) file: ${file}`);
             dirList.push(file);
         }*/
         return dirList;
@@ -220,9 +219,9 @@ export default class Ftp {
     getNames({
         remote = '/'
     } = {}) {
-        TRACE && log.info(`${LOG_PREFIX} getNames({ remote: ${toStr(remote)} })`);
+        TRACE && log.info(`${LOG_PREFIX} getNames({ remote: ${JSON.stringify(remote)} })`);
         const names = __.toNativeObject(Arrays.asList(this.__client.listNames(remote)));
-        DEBUG && log.info(`${LOG_PREFIX} getNames({ remote: ${toStr(remote)} }) names:${toStr(names)}`);
+        DEBUG && log.info(`${LOG_PREFIX} getNames({ remote: ${JSON.stringify(remote)} }) names:${JSON.stringify(names)}`);
         return names;
     } // getNames
 
