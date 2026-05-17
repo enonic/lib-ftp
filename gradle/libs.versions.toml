@@ -1,0 +1,5 @@
+[versions]
+commons-net = "3.13.0"
+
+[libraries]
+commons-net = { module = "commons-net:commons-net", version.ref = "commons-net" }
